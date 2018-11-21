@@ -26,13 +26,23 @@ final class Reader implements ReaderInterface
         if (null !== $this->file) {
             throw new \RuntimeException('Another file already opened');
         }
-        $this->file = \fopen($file, 'rb');
+        $this->file = \fopen($file, $mode);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileResource()
+    {
+        return $this->file;
     }
 
     public function close(): void
     {
-        \fclose($this->file);
-        $this->file = null;
+        if (null !== $this->file) {
+            \fclose($this->file);
+            $this->file = null;
+        }
     }
 
     public function getLines(): \Generator
