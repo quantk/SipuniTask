@@ -9,3 +9,27 @@
 1. оформить результат как готовый проект на github 
 2. использовать composer для автозагрузки классов и зависимостей 
 3. покрыть код unit-тестами
+
+# Использование
+```php
+use App\Reader\Reader;
+use App\TextSorter\TextSorter;
+
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$reader = new Reader();
+
+try {
+    $textSorter = new TextSorter();
+    $reader->open('./text.txt');
+
+    foreach ($reader->getLines() as $line) {
+        echo $textSorter->sort($line) . PHP_EOL;
+    }
+} catch (\Throwable $e) {
+    $reader->close();
+    throw $e;
+}
+
+```
